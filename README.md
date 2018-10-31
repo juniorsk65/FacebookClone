@@ -57,7 +57,7 @@ Repositorio usado para a disciplina de Banco de Dados da UFPB.
 
 > O moral do grupo é coletivo, pois todos os participantes do grupo podem postar fotos e textos [...]
 
-- [ ] Criar postagem
+- [x] Criar postagem
 
 > Podem apagar postagens, comentários e respostas, os autores dos conteúdos e o dono do perfil
 

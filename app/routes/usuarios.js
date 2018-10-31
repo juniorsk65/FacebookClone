@@ -1,15 +1,17 @@
 var express = require("express");
 var router = express.Router();
 var query = require("../utils/query");
-var amizadesRouter = require("./amizades");
-var postagensRouter = require("./postagensUsuario");
 var dynamicFilter = require("../utils/dynamicFilter");
 var dynamicSet = require("../utils/dynamicSet");
+//SubRecursos
+var amizadesRouter = require("./amizades");
+var postagensUsuarioRouter = require("./postagensUsuario");
+
 
 //Sub-recurso amizades
 router.use("/:idUsuario/amizades", amizadesRouter);
 //Sub-recurso postagensUsuario
-//router.use("/:idUsuario/postagem", postagensRouter);
+router.use("/:idUsuario/postagens", postagensUsuarioRouter);
 
 //Create
 router.post("/", async function(req, res, next) {

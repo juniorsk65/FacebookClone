@@ -1,11 +1,15 @@
 var express = require("express");
 var router = express.Router();
 var query = require("../utils/query");
+var postagensGrupoRouter = require("./postagensGrupo");
 var dynamicFilter = require("../utils/dynamicFilter");
 var dynamicSet = require("../utils/dynamicSet");
 
-//Create Group
 
+//Sub recurso de Grupo
+router.use("/:idGrupo/postagens", postagensGrupoRouter);
+
+//Create Group
 router.post("/", async function(req, res, next){
     try{
         const result = await query(
