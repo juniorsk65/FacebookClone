@@ -18,6 +18,7 @@ Repositorio usado para a disciplina de Banco de Dados da UFPB.
 
 - [x] Criar usuário
 
+
 > O usuário pode definir a visibiliadde das informações do seu perfil: para amigos; para amigos e amigos de amigos; ou pública.
 
 - [x] Atualizar privacidade
@@ -25,7 +26,7 @@ Repositorio usado para a disciplina de Banco de Dados da UFPB.
 > Um usuário pode listar todos os usuários e grupos da rede social, para que ele possa fazer novos amigos ou participar de grupos, porém não devem ser exibidos grupos ou usuarios que lhe bloquearam
 
 - [x] Listar usuario
-- [ ] Listar grupos
+- [x] Listar grupos
 
 ## Relacionamentos
 
@@ -84,7 +85,7 @@ Repositorio usado para a disciplina de Banco de Dados da UFPB.
 
 > Os usuários da rede social podem criar e participar de grupos.
 
-- [ ] Criar grupos
+- [x] Criar grupos
 
 > Para participar de um grupo, um usuário deve solicitar sua entrada no grupo, cabendo aos administradores aprovar ou rejeitar a soliticação.
 

@@ -3,10 +3,11 @@ var util = require("util");
 
 const conn = mysql.createConnection({
   host: "localhost",
-  port: "8080",
+  port: "3306",
   database: "facebook",
-  user: "admin",
-  password: "admin"
+  user: "luciano",
+  password: "1234",
+  multipleStatements: true
 });
 
 const query = util.promisify(conn.query).bind(conn);

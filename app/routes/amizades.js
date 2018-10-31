@@ -17,15 +17,19 @@ router.get("/", async function(req, res) {
   }
 });
 
-("SELECT * FROM Amizade");
+//("SELECT * FROM Amizade");
 
 router.post("/", async function(req, res) {
   try {
     let result = await query(
-      "INSERT INTO Amizade (idUsuario1, idUsuario2, bloqueio, status) VALUES (?,?,?,?)",
+      "INSERT INTO Amizade (idUsuario1, idUsuario2, bloqueio, status) VALUES (?,?,?,?), (?,?,?,?)",
       [
         req.body.idUsuario1,
         req.body.idUsuario2,
+        req.body.bloqueio,
+        req.body.status,
+        req.body.idUsuario2,
+        req.body.idUsuario1,
         req.body.bloqueio,
         req.body.status
       ]
