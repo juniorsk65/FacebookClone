@@ -9,9 +9,9 @@ var postagensUsuarioRouter = require("./postagensUsuario");
 
 
 //Sub-recurso amizades
-router.use("/:idUsuario/amizades", amizadesRouter);
+router.use("/:idUsuario/amizades/", amizadesRouter);
 //Sub-recurso postagensUsuario
-router.use("/:idUsuario/postagens", postagensUsuarioRouter);
+router.use("/:idUsuario/postagens/", postagensUsuarioRouter);
 
 //Create
 router.post("/", async function(req, res, next) {
@@ -33,6 +33,7 @@ router.post("/", async function(req, res, next) {
 
 //READ
 //Get all users listing
+//http://localhost:3000/api/usuarios/?{parametro}={busca}
 router.get("/", async function(req, res, next) {
   try {
     var result = await query(
@@ -46,6 +47,7 @@ router.get("/", async function(req, res, next) {
 });
 
 //Get user by id
+//http://localhost:3000/api/usuarios/{idUsuario}
 router.get("/:id", async function(req, res, next) {
   try {
     var result = await query(`SELECT * FROM Usuario WHERE idUsuario LIKE ?;`, [
@@ -60,6 +62,7 @@ router.get("/:id", async function(req, res, next) {
 //Update
 
 //Update privacidade
+
 router.put("/:idUsuario", async function(req, res, next) {
   try {
     //Se nenhum corpo for passado como argumento

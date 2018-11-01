@@ -7,7 +7,7 @@ var dynamicSet = require("../utils/dynamicSet");
 
 
 //Sub recurso de Grupo
-router.use("/:idGrupo/postagens", postagensGrupoRouter);
+router.use("/:idGrupo/postagens/", postagensGrupoRouter);
 
 //Create Group
 router.post("/", async function(req, res, next){

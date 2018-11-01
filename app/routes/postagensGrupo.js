@@ -5,6 +5,9 @@ const dynamicSet = require("../utils/dynamicSet");
 const query = require("../utils/query");
 const { split } = require("../utils/slug");
 
+//router.use()
+
+//http://localhost:3000/api/grupos/{idGrupo}/postagens/
 router.get("/", async function(req, res) {
     try{
         let result = await query(
@@ -17,12 +20,21 @@ router.get("/", async function(req, res) {
     }
 });
 
-router.post("/:idGrupo", async function(req, res, next) {
+//http://localhost:3000/api/grupos/{idGrupo}/postagens/
+router.post("/", async function(req, res, next) {
     try{
         let result = await query(
-            "INSERT INTO PostagensGrupo ("
+            "INSERT INTO PostagensGrupo (Usuario_idUsuario, Grupo_idGrupo, conteudo) VALUES (?,?,?);",
+            [
+                req.body.Usuario_idUsuario,
+                req.body.Grupo_idGrupo,
+                req.body.conteudo
+            ]
         )
+        res.json(result);
+    }catch(err){
+        res.status(500).json({erro: err.code});
     }
-})
+});
 
 module.exports = router;

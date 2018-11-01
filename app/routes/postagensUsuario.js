@@ -1,13 +1,16 @@
 const express = require("express");
 //mergeParams garante preservação de parametros vindo de rotas superiores
 const router = express.Router({ mergeParams: true });
+const respostaUsuario = require("../routes/respostaUsuario");
 const dynamicSet = require("../utils/dynamicSet");
 const query = require("../utils/query");
 const { split } = require("../utils/slug");
 
+//Sub recurso de Grupo
+router.use("/:idPostagem/respostas/", respostaUsuario);
 
 //Get all posts from userX, where owner=X and id=X
-//http://localhost:3000/api/usuarios/1/postagens/?idUsuario=1
+//http://localhost:3000/api/usuarios/{idUsuario}/postagens/
 router.get("/", async function(req, res){
     try{
         let result = await query(
