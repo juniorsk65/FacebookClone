@@ -1,4 +1,4 @@
-const SEPARATOR = "_";
+const SEPARATOR = "-";
 
 module.exports.join = (...args) => args.join(SEPARATOR);
 

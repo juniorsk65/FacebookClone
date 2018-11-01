@@ -38,7 +38,6 @@ router.get("/", async function(req, res, next) {
   try {
     var result = await query(
       "SELECT * FROM Usuario" + dynamicFilter(req.query),
-      console.log(dynamicFilter)
     );
     res.json(result);
   } catch (err) {
@@ -60,9 +59,8 @@ router.get("/:id", async function(req, res, next) {
 });
 
 //Update
-
-//Update privacidade
-
+//http://localhost:3000/api/usuarios/{idUsuario}
+//Dentro do body colocar os campos que deseja alterar
 router.put("/:idUsuario", async function(req, res, next) {
   try {
     //Se nenhum corpo for passado como argumento
