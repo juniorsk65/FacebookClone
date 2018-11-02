@@ -7,17 +7,27 @@ const { split } = require("../utils/slug");
 
 router.get("/", async function(req, res) {
   try {
-    let result = await query("SELECT * FROM Amizade WHERE idUsuario1=? AND ", [
-      req.params.idUsuario,
-      req.params.idUsuario
-    ]);
+    let result = await query(
+      "select  idUsuario, nomeUsuario, cidade from Amizade a1, Usuario u where a1.idUsuario1=? and u.idUsuario=a1.idUsuario2",
+      [req.params.idUsuario]
+    );
     res.json(result);
   } catch (err) {
     res.status(444).json({ erro: err.code });
   }
 });
 
-//("SELECT * FROM Amizade");
+router.get("/pendentes", async function(req, res, next) {
+  try {
+    var result = await query(
+      "SELECT idUsuario, nomeUsuario, email FROM Amizade a, Usuario u WHERE idUsuario1=? AND status=1 AND u.idUsuario=a.idUsuario2",
+      [req.params.idUsuario]
+    );
+    res.json(result);
+  } catch (err) {
+    res.status(404).json({ erro: err.code });
+  }
+});
 
 router.post("/", async function(req, res) {
   try {

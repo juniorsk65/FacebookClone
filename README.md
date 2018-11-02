@@ -1,10 +1,10 @@
 - [FacebookClone](#facebookclone)
 - [Features](#features)
-    - [Usuarios](#usuarios)
-    - [Relacionamentos](#relacionamentos)
-    - [Postagens](#postagens)
-    - [Comentários](#comentários)
-    - [Grupos](#grupos)
+  - [Usuarios](#usuarios)
+  - [Relacionamentos](#relacionamentos)
+  - [Postagens](#postagens)
+  - [Comentários](#comentários)
+  - [Grupos](#grupos)
 
 # FacebookClone
 
@@ -17,7 +17,8 @@ Repositorio usado para a disciplina de Banco de Dados da UFPB.
 > Um usuario mantem um perfil com nome, foto, cidade onde vive, mural amizades e grupos.
 
 - [x] Criar usuário
-
+  > GET http://localhost:3000/api/usuarios/
+  > Body{"nomeUsuario": "Alan", "cidade": "Uirauna", "privacidade": "1", "email": "emailunitario"}
 
 > O usuário pode definir a visibiliadde das informações do seu perfil: para amigos; para amigos e amigos de amigos; ou pública.
 
