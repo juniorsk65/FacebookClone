@@ -110,7 +110,9 @@ Repositorio usado para a disciplina de Banco de Dados da UFPB.
 
 
 1 - membro
+
 2 - recusados
+
 3 - bloqueados
 
 

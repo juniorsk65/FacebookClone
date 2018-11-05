@@ -14,7 +14,8 @@ router.use("/:idGrupo/postagens/", postagensGrupoRouter);
 router.post("/", async function(req, res, next){
     try{
         const result = await query(
-            "INSERT INTO Grupo (nomeGrupo, descricaoGrupo, foto) VALUES(?, ?, ?); INSERT INTO Participacao (Usuario_idUsuario, Grupo_idGrupo, Administrador, Participacao) VALUES (?, LAST_INSERT_ID(), ?, ?);",
+            "INSERT INTO Grupo (nomeGrupo, descricaoGrupo, foto) VALUES(?, ?, ?);\
+             INSERT INTO Participacao (Usuario_idUsuario, Grupo_idGrupo, Administrador, Participacao) VALUES (?, LAST_INSERT_ID(), ?, ?);",
             [
                 req.body.nomeGrupo,
                 req.body.descricaoGrupo,
@@ -45,7 +46,7 @@ router.get("/", async function(req, res, next){
 });
 
 //Get group by id
-//http://localhost:3000/api/grupos/
+//http://localhost:3000/api/grupos/{idGrupo}
 router.get("/:id", async function(req, res, next) {
     try {
       var result = await query(`SELECT * FROM Grupo WHERE idGrupo LIKE ?;`, [
@@ -72,19 +73,39 @@ router.get("/", async function(req, res, next) {
   });
   
 //Update
-//http://localhost:3000/api/grupos/
-/*
-router.post("/", async function(req, res, next) {
+//http://localhost:3000/api/grupos/{idGrupo}
+//Dentro do body colocar os campos que deseja alterar
+router.put("/:idGrupo", async function(req, res, next) {
     try {
+      //Se nenhum corpo for passado como argumento
+      if (Object.keys(req.body).length == 0) res.status(200).end();
+      console.log( "UPDATE Grupo SET " + dynamicSet(req.body) + " WHERE idGrupo=?")
+      
       var result = await query(
-        "SELECT * FROM Grupo " + dynamicFilter(req.query),
-        console.log(dynamicFilter)
+        "UPDATE Grupo SET " + dynamicSet(req.body) + " WHERE idGrupo=?",
+        [req.params.idGrupo]
       );
+      console.log(result);
       res.json(result);
+
     } catch (err) {
-      res.status(404).json({ erro: err.code });
+      res.status(444).json({ erro: err.code });
     }
   });
-*/
+
+
+//Delete
+//http://localhost:3000/api/grupos/{idGrupo}
+router.delete("/:idGrupo", async function(req, res, next){
+  try {
+    var result = await query(
+      "DELETE FROM Grupo WHERE idGrupo = ?",
+      [req.params.idGrupo]
+    );
+    res.json(result);
+  } catch (e) {
+    res.status(666).json({ erro: err.code });
+  }
+});
 
 module.exports = router;

@@ -336,22 +336,24 @@ def fazer_grupo(idUsuario):
     resultado["descricaoGrupo"] = resultado.pop("Descrição Grupo")
     
     
+    # Novos campos para no momento da criação do grupo, crie um relacionamento
+    # do tipo Admin com o usuário que criou. 
+
+    # Id do usuário que está relacionada ao grupo
+    resultado["Usuario_idUsuario"] = str(idUsuario)
     
-    campos["Usuario_idUsuario"] = idUsuario
-    
-    # Se um usuário criou o grupo, ele será o admin
-    campos["Administrador"] = idUsuario
+    # Se um usuário criou o grupo, ele será o admin (flag 1 para admin)
+    resultado["Administrador"] = str(1)
     
     # Sempre o primeiro usuário será o melhor
-    campos["Participacao"] = 1
+    resultado["Participacao"] = str(1)
     
-
-
-
+    
     cadastrarGrupo(resultado)
     
-    #print(resultado)
-    #print(campos)
+    print(resultado)
+    print(campos)
+    input()
     pagina_usuario(idUsuario)
 
 def ver_grupos(idUsuario):
