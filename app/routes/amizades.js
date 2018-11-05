@@ -8,7 +8,7 @@ const { split } = require("../utils/slug");
 router.get("/", async function(req, res) {
   try {
     let result = await query(
-      "select  idUsuario, nomeUsuario, cidade from Amizade a1, Usuario u where a1.idUsuario1=? and u.idUsuario=a1.idUsuario2",
+      "select  idUsuario, nomeUsuario, cidade, email from Amizade a1, Usuario u where a1.idUsuario1=? and u.idUsuario=a1.idUsuario2",
       [req.params.idUsuario]
     );
     res.json(result);
@@ -17,10 +17,12 @@ router.get("/", async function(req, res) {
   }
 });
 
+
+
 router.get("/pendentes", async function(req, res, next) {
   try {
     var result = await query(
-      "SELECT idUsuario, nomeUsuario, email FROM Amizade a, Usuario u WHERE idUsuario1=? AND status=1 AND u.idUsuario=a.idUsuario2",
+      "SELECT idUsuario, nomeUsuario, email FROM Amizade a, Usuario u WHERE idUsuario1=? AND status=0 AND u.idUsuario=a.idUsuario2",
       [req.params.idUsuario]
     );
     res.json(result);
@@ -50,7 +52,8 @@ router.post("/", async function(req, res) {
   }
 });
 
-//Pesquisa por amizade com {idUsuario1}-{idUsuario2}
+//Pesquisa por amizade com {idUsuario1}-{idUsuario2} para alterar
+// Ja altera dos dois
 router.put("/:slugAmizade", async function(req, res) {
   try {
     let ids = split(req.params.slugAmizade);

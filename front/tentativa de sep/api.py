@@ -1,12 +1,14 @@
 import requests
 
+
+############### API ################################
 BASE_URL = "http://127.0.0.1:3000/api"
 def cadastrarUsuario(data):
     requests.post(BASE_URL + "/usuarios/", data)
 
 def getUsuario(email):
     '''
-        #email = string
+        email = string
     '''
     return requests.get(BASE_URL + "/usuarios/?email=" + email)
 
@@ -39,52 +41,17 @@ def getAllGrupos(idUsuario):
 
 def getInfoUsers(parametro, busca):
     '''
-    #//http://localhost:3000/api/usuarios/?{parametro}={busca})
+    //http://localhost:3000/api/usuarios/?{parametro}={busca})
     '''
     return requests.get(BASE_URL + "/usuarios/?" + parametro + busca)
 
 def amizadePost(idUsuario, data):
-    return requests.post(BASE_URL + "/usuarios/" + str(idUsuario) + "/amizades/", data)
+    pass
+    #requests.post(BASE_URL + "/usuarios/" + str(idUsuario) + 1"/amizades/", data)
+
 
 def getAmigos(idUsuario, data):
-    '''
-    http://localhost:3000/api/usuarios/{idUsuario}/amizades/
-    '''
-    return requests.get(BASE_URL + "/usuarios/" + str(idUsuario) + "/amizades/", data)
-
-def getAmigosPendentes(idUsuario, data):
-    '''
-    http://localhost:3000/api/usuarios/{idUsuario}/amizades/
-    '''
-    return requests.get(BASE_URL + "/usuarios/" + str(idUsuario) + "/amizades/pendentes")
+    return requests.post(BASE_URL + "/usuarios/" + str(idUsuario) + "/amizades/", data)
 
 
-def deleteUsuario(idUsuario):
-    '''
-    http://localhost:3000/api/usuarios/{idUsuario}
-    '''
-    requests.delete(BASE_URL + "/usuarios/" + str(idUsuario))
-
-def updateUsuario(idUsuario, data):
-    """
-    Update
-    http://localhost:3000/api/usuarios/{idUsuario}
-    Dentro do body colocar os campos que deseja alterar
-    """
-    requests.put(BASE_URL + "/usuarios/" + str(idUsuario), data)
-
-def updateAmizade(idUsuario, idUsuario2, data):
-    requests.put(BASE_URL + "/usuarios/"+str(idUsuario)+"/amizades/" + str(idUsuario) + "-" + str(idUsuario2), data)
-
-
-if __name__ == "__main__":
-    amizade = {
-        "idUsuario1": 5,
-        "idUsuario2": 9,
-        "bloqueio": 0,
-        "status": 0
-        }
-    
-    print(amizadePost(5, amizade).json())
-    
-    
+############### FIM API ########################################################

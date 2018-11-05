@@ -14,6 +14,8 @@ router.use("/:idUsuario/amizades/", amizadesRouter);
 router.use("/:idUsuario/postagens/", postagensUsuarioRouter);
 
 //Create
+//POST, receive body with JSON of user
+//http://localhost:3000/api/usuarios/
 router.post("/", async function(req, res, next) {
   try {
     const result = await query(
@@ -77,5 +79,16 @@ router.put("/:idUsuario", async function(req, res, next) {
 });
 
 //Delete
-
+//http://localhost:3000/api/usuarios/{idUsuario}
+router.delete("/:idUsuario", async function(req, res, next){
+  try {
+    var result = await query(
+      "DELETE FROM Usuario WHERE idUsuario = ?",
+      [req.params.idUsuario]
+    );
+    res.json(result);
+  } catch (e) {
+    res.status(666).json({ erro: err.code });
+  }
+});
 module.exports = router;

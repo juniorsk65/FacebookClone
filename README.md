@@ -1,10 +1,10 @@
 - [FacebookClone](#facebookclone)
 - [Features](#features)
-  - [Usuarios](#usuarios)
-  - [Relacionamentos](#relacionamentos)
-  - [Postagens](#postagens)
-  - [Comentários](#comentários)
-  - [Grupos](#grupos)
+    - [Usuarios](#usuarios)
+    - [Relacionamentos](#relacionamentos)
+    - [Postagens](#postagens)
+    - [Comentários](#coment%C3%A1rios)
+    - [Grupos](#grupos)
 
 # FacebookClone
 
@@ -106,3 +106,12 @@ Repositorio usado para a disciplina de Banco de Dados da UFPB.
 > Os administradores podem ainda bloquear qualquer membro do grupo, ficando o membro bloqueado impedido de visualizar o grupo, e consequentemente, de solicitar participação do grupo, até que um administrador faça o desbloqueio do usuário.
 
 - [ ] Atualizar bloqueio de participante
+
+
+
+1 - membro
+2 - recusados
+3 - bloqueados
+
+
+

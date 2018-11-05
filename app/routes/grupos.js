@@ -9,7 +9,8 @@ var dynamicSet = require("../utils/dynamicSet");
 //Sub recurso de Grupo
 router.use("/:idGrupo/postagens/", postagensGrupoRouter);
 
-//Create Group
+//Create Group POST
+//http://localhost:3000/api/grupos/
 router.post("/", async function(req, res, next){
     try{
         const result = await query(
@@ -31,6 +32,7 @@ router.post("/", async function(req, res, next){
 
 
 //Read all groups
+//http://localhost:3000/api/grupos/
 router.get("/", async function(req, res, next){
     try{
         const result = await query(
@@ -43,6 +45,7 @@ router.get("/", async function(req, res, next){
 });
 
 //Get group by id
+//http://localhost:3000/api/grupos/
 router.get("/:id", async function(req, res, next) {
     try {
       var result = await query(`SELECT * FROM Grupo WHERE idGrupo LIKE ?;`, [
@@ -55,6 +58,7 @@ router.get("/:id", async function(req, res, next) {
   });
 
 //Get all group listing by query
+//http://localhost:3000/api/grupos/
 router.get("/", async function(req, res, next) {
     try {
       var result = await query(
@@ -67,7 +71,20 @@ router.get("/", async function(req, res, next) {
     }
   });
   
-  //Update
-
+//Update
+//http://localhost:3000/api/grupos/
+/*
+router.post("/", async function(req, res, next) {
+    try {
+      var result = await query(
+        "SELECT * FROM Grupo " + dynamicFilter(req.query),
+        console.log(dynamicFilter)
+      );
+      res.json(result);
+    } catch (err) {
+      res.status(404).json({ erro: err.code });
+    }
+  });
+*/
 
 module.exports = router;
