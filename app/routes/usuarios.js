@@ -3,6 +3,7 @@ var router = express.Router();
 var query = require("../utils/query");
 var dynamicFilter = require("../utils/dynamicFilter");
 var dynamicSet = require("../utils/dynamicSet");
+var mysql = require("mysql")
 //SubRecursos
 var amizadesRouter = require("./amizades");
 var postagensUsuarioRouter = require("./postagensUsuario");
@@ -18,6 +19,21 @@ router.use("/:idUsuario/postagens/", postagensUsuarioRouter);
 //http://localhost:3000/api/usuarios/
 router.post("/", async function(req, res, next) {
   try {
+    const sql = mysql.format(
+      "INSERT INTO Usuario (nomeUsuario, cidade, privacidade, email) VALUES (?, ?, ?, ?);",
+      [
+        req.body.nomeUsuario,
+        req.body.cidade,
+        req.body.privacidade,
+        req.body.email
+      ]
+    );
+    var result =  await query(sql);
+    res.json({
+      sql,
+      result,
+    });
+    /*
     const result = await query(
       "INSERT INTO Usuario (nomeUsuario, cidade, privacidade, email) VALUES (?, ?, ?, ?);",
       [
@@ -28,6 +44,7 @@ router.post("/", async function(req, res, next) {
       ]
     );
     res.json(result);
+    */
   } catch (err) {
     res.status(500).json({ erro: err.code });
   }
@@ -38,10 +55,12 @@ router.post("/", async function(req, res, next) {
 //http://localhost:3000/api/usuarios/?{parametro}={busca}
 router.get("/", async function(req, res, next) {
   try {
-    var result = await query(
-      "SELECT * FROM Usuario" + dynamicFilter(req.query),
-    );
-    res.json(result);
+    const sql = mysql.format( "SELECT * FROM Usuario" + dynamicFilter(req.query));
+    var result =  await query(sql);
+    res.json({
+      sql,
+      result,
+    });
   } catch (err) {
     res.status(404).json({ erro: err.code });
   }
@@ -51,10 +70,14 @@ router.get("/", async function(req, res, next) {
 //http://localhost:3000/api/usuarios/{idUsuario}
 router.get("/:id", async function(req, res, next) {
   try {
-    var result = await query(`SELECT * FROM Usuario WHERE idUsuario LIKE ?;`, [
+    const sql = mysql.format(`SELECT * FROM Usuario WHERE idUsuario LIKE ?;`, [
       req.params.id
     ]);
-    res.json(result);
+    var result =  await query(sql);
+    res.json({
+      sql,
+      result,
+    });
   } catch (err) {
     res.status(444).json({ erro: err.code });
   }
@@ -68,11 +91,19 @@ router.put("/:idUsuario", async function(req, res, next) {
     //Se nenhum corpo for passado como argumento
     if (Object.keys(req.body).length == 0) res.status(200).end();
 
+    const sql = mysql.format( "SELECT * FROM Usuario" + dynamicFilter(req.query));
+    var result =  await query(sql);
+    res.json({
+      sql,
+      result,
+    });
+  /*
     var result = await query(
       "UPDATE Usuario SET " + dynamicSet(req.body) + " WHERE idUsuario=?",
       [req.params.idUsuario]
     );
     res.json(result);
+  */
   } catch (e) {
     res.status(444).json({ erro: err.code });
   }
@@ -82,11 +113,25 @@ router.put("/:idUsuario", async function(req, res, next) {
 //http://localhost:3000/api/usuarios/{idUsuario}
 router.delete("/:idUsuario", async function(req, res, next){
   try {
+
+    const sql = mysql.format( 
+      "DELETE FROM Usuario WHERE idUsuario = ?",
+      [req.params.idUsuario]
+    );
+    var result =  await query(sql);
+    res.json({
+      sql,
+      result,
+    });
+
+    /*
     var result = await query(
       "DELETE FROM Usuario WHERE idUsuario = ?",
       [req.params.idUsuario]
     );
     res.json(result);
+    */
+
   } catch (e) {
     res.status(666).json({ erro: err.code });
   }

@@ -13,6 +13,26 @@ router.use("/:idGrupo/postagens/", postagensGrupoRouter);
 //http://localhost:3000/api/grupos/
 router.post("/", async function(req, res, next){
     try{
+      const sql = mysql.format(
+       "INSERT INTO Grupo (nomeGrupo, descricaoGrupo, foto) VALUES(?, ?, ?);\
+        INSERT INTO Participacao (Usuario_idUsuario, Grupo_idGrupo, Administrador, Participacao) VALUES (?, LAST_INSERT_ID(), ?, ?);",
+       [
+           req.body.nomeGrupo,
+           req.body.descricaoGrupo,
+           req.body.foto,
+           req.body.Usuario_idUsuario,
+           req.body.Administrador,
+           req.body.Participacao
+       ]
+      );
+      var result =  await query(sql);
+      res.json({
+        sql,
+        result,
+      });
+
+
+      /*
         const result = await query(
             "INSERT INTO Grupo (nomeGrupo, descricaoGrupo, foto) VALUES(?, ?, ?);\
              INSERT INTO Participacao (Usuario_idUsuario, Grupo_idGrupo, Administrador, Participacao) VALUES (?, LAST_INSERT_ID(), ?, ?);",
@@ -26,6 +46,7 @@ router.post("/", async function(req, res, next){
             ]
         );
         res.json(result);
+        */
     }catch(err){
         res.status(500).json({erro: err.code});
     }
@@ -36,10 +57,21 @@ router.post("/", async function(req, res, next){
 //http://localhost:3000/api/grupos/
 router.get("/", async function(req, res, next){
     try{
+      const sql = mysql.format(
+        "SELECT * FROM Grupo"
+       );
+       var result =  await query(sql);
+       res.json({
+         sql,
+         result,
+       });
+
+        /*
         const result = await query(
             "SELECT * FROM Grupo"
         );
         res.json(result);
+        */
     } catch(err){
         res.status(404).json({ erro: err.code });
     }
