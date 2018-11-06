@@ -348,15 +348,68 @@ def fazer_grupo(idUsuario):
     # Sempre o primeiro usuário será o melhor
     resultado["Participacao"] = str(1)
     
-    
+
     cadastrarGrupo(resultado)
     
-    print(resultado)
-    print(campos)
-    input()
+    #print(resultado)
+    #print(campos)
+    #input()
     pagina_usuario(idUsuario)
 
 def ver_grupos(idUsuario):
+    os.system("clear")
+    
+    user_name = getUsuarioByID(idUsuario).json()[0]["nomeUsuario"]
+    print("#"*50)
+    print("\t Amigos do: " + user_name)
+    print("#"*50, "\n\n")
+
+    data = {}
+
+    amigos = getAmigosPendentes(idUsuario, data).json()
+    #print(amigos)
+
+    if len(amigos) == 0:
+        print("Não há amigos pendentes.")
+        input()
+        pagina_usuario(idUsuario)
+
+
+    amigos_pendentes = []
+    numero = 1
+
+    for amigo in amigos:
+        print("#"*15, numero ,"#"*32)
+        numero = numero + 1
+        amigos_pendentes.append(amigo["idUsuario"])
+
+        print("Nome Usuario:", amigo["nomeUsuario"])
+        print("Email:", amigo["email"])
+        print("#"*50, "\n\n")
+    
+    entrada = input("Você deseja aceitar algum amigo pendente?[s/n]")
+    
+    if entrada == "s":
+        numero_amigo_aceitado = int(input("Qual grupo deseja entrar aceitar? [Numero] "))
+        print(numero_amigo_aceitado)
+        print(amigos_pendentes[numero_amigo_aceitado - 1])
+        data = {
+            "status":1
+        }    
+        try:
+            updateAmizade(idUsuario, amigos_pendentes[numero_amigo_aceitado-1], data)
+        except:
+            print("Não foi possivel realizar a mudança")
+        input()
+        pagina_usuario(idUsuario)
+    elif entrada == "n":
+        input("Voltando para pagina inicial")
+        pagina_usuario(idUsuario)
+        input()
+    else:
+        input("Entrada inválida")
+        pagina_usuario(idUsuario)
+
     os.system("clear")
     
     user_name = getUsuarioByID(idUsuario).json()[0]["nomeUsuario"]
@@ -381,6 +434,9 @@ def ver_grupos(idUsuario):
     
     input()
     pagina_usuario(idUsuario)
+
+    
+
 
 def grupos(idUsuario):
     os.system("clear")
@@ -533,11 +589,11 @@ def landing_page():
         landing_page()
 
 if __name__ == "__main__":
-    #landing_page()
+    landing_page()
     
     # Para debugar
 
-    pagina_usuario(9)
+    #pagina_usuario(9)
     #cadastrar()
     #print(getPostagens(1).json())
     #procurar_pessoa(9)
