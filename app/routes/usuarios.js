@@ -1,5 +1,5 @@
 var express = require("express");
-var router = express.Router();
+var router = express.Router({ mergeParams: true });
 var query = require("../utils/query");
 var dynamicFilter = require("../utils/dynamicFilter");
 var dynamicSet = require("../utils/dynamicSet");
@@ -18,16 +18,17 @@ router.use("/:idUsuario/postagens/", postagensUsuarioRouter);
 //POST, receive body with JSON of user
 //http://localhost:3000/api/usuarios/
 router.post("/", async function(req, res, next) {
+  
+  const sql = mysql.format(
+    "INSERT INTO Usuario (nomeUsuario, cidade, privacidade, email) VALUES (?, ?, ?, ?);",
+    [
+      req.body.nomeUsuario,
+      req.body.cidade,
+      req.body.privacidade,
+      req.body.email
+    ]
+  );
   try {
-    const sql = mysql.format(
-      "INSERT INTO Usuario (nomeUsuario, cidade, privacidade, email) VALUES (?, ?, ?, ?);",
-      [
-        req.body.nomeUsuario,
-        req.body.cidade,
-        req.body.privacidade,
-        req.body.email
-      ]
-    );
     var result =  await query(sql);
     res.json({
       sql,
@@ -47,6 +48,7 @@ router.post("/", async function(req, res, next) {
     */
   } catch (err) {
     res.status(500).json({ erro: err.code });
+    res.json({ sql, result })
   }
 });
 

@@ -1,5 +1,5 @@
 var express = require("express");
-var router = express.Router();
+var router = express.Router({ mergeParams: true });
 var query = require("../utils/query");
 var postagensGrupoRouter = require("./postagensGrupo");
 var dynamicFilter = require("../utils/dynamicFilter");
@@ -30,23 +30,6 @@ router.post("/", async function(req, res, next){
         sql,
         result,
       });
-
-
-      /*
-        const result = await query(
-            "INSERT INTO Grupo (nomeGrupo, descricaoGrupo, foto) VALUES(?, ?, ?);\
-             INSERT INTO Participacao (Usuario_idUsuario, Grupo_idGrupo, Administrador, Participacao) VALUES (?, LAST_INSERT_ID(), ?, ?);",
-            [
-                req.body.nomeGrupo,
-                req.body.descricaoGrupo,
-                req.body.foto,
-                req.body.Usuario_idUsuario,
-                req.body.Administrador,
-                req.body.Participacao
-            ]
-        );
-        res.json(result);
-        */
     }catch(err){
         res.status(500).json({erro: err.code});
     }
@@ -65,13 +48,6 @@ router.get("/", async function(req, res, next){
          sql,
          result,
        });
-
-        /*
-        const result = await query(
-            "SELECT * FROM Grupo"
-        );
-        res.json(result);
-        */
     } catch(err){
         res.status(404).json({ erro: err.code });
     }

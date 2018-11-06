@@ -2,6 +2,7 @@ const express = require("express");
 //mergeParams garante preservação de parametros vindo de rotas superiores
 const router = express.Router({ mergeParams: true });
 const dynamicSet = require("../utils/dynamicSet");
+const mysql = require("mysql")
 const query = require("../utils/query");
 const { split } = require("../utils/slug");
 
@@ -71,24 +72,21 @@ router.put("/:slugAmizade", async function(req, res) {
 
 //Mostrar amigos dos meus amigos
 //localhost:3000/api/usuarios/{idUsuario1}/amizades/to/{idUsuario2}
-http: router.get("/to/:amigo", async function(req, res) {
+router.get("/to/:amigo", async function(req, res) {
   try {
-    console.log(req.params);
-    const queryString =
-      "SELECT u.* FROM Amizade a1, Amizade a2, Usuario u " +
-      "WHERE a1.idUsuario2 = a2.idUsuario2 " +
-      "AND u.idUsuario = a1.idUsuario2 " +
-      "AND a1.idUSuario1 = ? " +
-      "AND a2.idUsuario2 = ?";
+    const queryString = mysql.format(
+      "SELECT subq.*, count(*) AS Contador " +
+      "FROM ( SELECT idUsuario2 AS Amigos FROM Amizade WHERE idUsuario1 = ? " +
+      "UNION ALL SELECT idUsuario2 AS Amigos FROM Amizade " +
+      "WHERE idUsuario1 = ?) subq " +
+      "GROUP BY Amigos HAVING Contador = 2;",
+       [req.params.idUsuario, req.params.amigo]);
+      
+    let result = await query(queryString);
 
-    let result = await query(queryString, [
-      req.params.idUsuario,
-      req.params.amigo
-    ]);
-
-    res.json(result);
+    res.json({queryString, result});
   } catch (err) {
-    res.status(444).json({ erro: err.code });
+    res.status(444).json({erro: err.code});
   }
 });
 

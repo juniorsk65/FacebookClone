@@ -5,6 +5,7 @@ const respostaUsuario = require("../routes/respostaUsuario");
 var dynamicFilter = require("../utils/dynamicFilter");
 const dynamicSet = require("../utils/dynamicSet");
 const query = require("../utils/query");
+const mysql = require("mysql");
 const { split } = require("../utils/slug");
 
 //Sub recurso de Grupo
@@ -47,6 +48,19 @@ router.post("/:idUsuario", async function(req, res, next) {
     );
     res.json(result);
   } catch (err) {
+    res.status(404).json({ erro: err.code });
+  }
+});
+
+router.delete("/:idPostagem", async function(req, res, next){
+  try{
+    let stringsql = mysql.format(
+      "DELETE FROM PostagensUsuario WHERE usuarioProprietario=? AND idPostagem = ?",
+      [req.params.idUsuario, req.params.idPostagem]
+    );
+    var result =  await query(stringsql);
+    res.json({ stringsql, result});
+  }catch(e){
     res.status(404).json({ erro: err.code });
   }
 });
